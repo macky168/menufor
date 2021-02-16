@@ -1,0 +1,484 @@
+<% checkbox_id = 0 %>
+<% num_of_menu = 0 %>
+
+<div class="restaurantname">
+    <h3><%= @restaurant_name %></h3>
+</div>
+
+<div class="search">
+    <%= form_tag(controller: "restaurants", action: "index") do %>
+        アレルギー情報<br>
+        ・小麦：<%= select_tag('wheat_threshold', options_for_select(["3.問題なし", "2.慎重", "1.禁忌"])) %> <br>
+        ・卵：<%= select_tag('egg_threshold', options_for_select(["3.問題なし", "2.慎重", "1.禁忌"])) %> <br>
+        ・落花生：<%= select_tag('nuts_threshold', options_for_select(["3.問題なし", "2.慎重", "1.禁忌"])) %> <br>
+
+        興味のある栄養情報<br>
+        <%= check_box_tag("energy_check") %>
+        <%= label_tag("energy_check", "エネルギー") %>
+
+        <%= check_box_tag("protein_check") %>
+        <%= label_tag("pritein_check", "たんぱく質") %>
+
+        <%= check_box_tag("fat_check") %>
+        <%= label_tag("fat_check", "脂質") %>
+
+        <%= check_box_tag("carbohydrate_check") %>
+        <%= label_tag("carbohydrate_check", "炭水化物") %>
+
+        <br>
+        <%= submit_tag("検索") %>
+    <% end %>
+</div>
+
+<div class="area">
+    <input type="radio" name="tab_name" id="tab1" checked>
+    <label class="tab_class" for="tab1">Lunch</label>
+    <div class="content_class">
+        <div class="box-menu-genre">
+            <h3>Food</h3>
+            <% @data.each do |obj| %>
+                <% if obj.is_lunch == 1 then %>
+                <% if obj.is_food == 1 then %>
+                    <% if obj.include_wheat <= @wheat_threshold then %>
+                    <% if obj.include_egg <= @egg_threshold then %>
+                    <% if obj.include_nuts <= @nuts_threshold then %>
+
+                        <div class="box-menu-each">
+                            <input type="checkbox" id=<%= checkbox_id %> class="chklbl"/>
+                            <label for=<%= checkbox_id %>><h4> <%= obj.menu %> </h4>¥ <%= obj.price %> <br></label>
+                            <% checkbox_id += 1 %>
+                            
+                            <div class="detail">
+                                <%= obj.detail %> <br>
+                                --アレルギー含有情報-----<br>
+                                <% if @wheat_threshold < 3 then %> 小麦：<%= obj.include_wheat %>, <% end %>
+                                <% if @egg_threshold < 3 then %> 卵：<%= obj.include_egg %>, <% end %>
+                                <% if @nuts_threshold < 3 then %> 落花生：<%= obj.include_nuts %>, <% end %>
+
+                                <br><br>
+                                --栄養情報-----<br>
+                                <% if @energy > 0 then %> エネルギー：<%= obj.energy %>kcal, <% end %>
+                                <% if @protein > 0 then %> たんぱく質：<%= obj.protein %>g, <% end %>
+                                <% if @fat > 0 then %> 脂質：<%= obj.fat %>g, <% end %>
+                                <% if @carbohydrate > 0 then %> 炭水化物：<%= obj.carbohydrate %>g, <% end %>
+
+                            </div>
+                            <% num_of_menu += 1 %>
+                        </div>
+
+                    <% end %>
+                    <% end %>
+                    <% end %>
+                <% end %>
+                <% end %>
+            <% end %>
+
+            <% if num_of_menu == 0 then %>
+            nothing to show
+            <% end %>
+
+            <% num_of_menu = 0 %>
+        </div>
+
+        <br>
+
+        <div class="box-menu-genre">
+
+            <h3>Drink</h3>
+            <% @data.each do |obj| %>
+                <% if obj.is_lunch == 1 then %>
+                <% if obj.is_drink == 1 then %>
+                    <% if obj.include_wheat <= @wheat_threshold then %>
+                    <% if obj.include_egg <= @egg_threshold then %>
+                    <% if obj.include_nuts <= @nuts_threshold then %>
+
+                        <div class="box-menu-each">
+                            <input type="checkbox" id=<%= checkbox_id %> class="chklbl"/>
+                            <label for=<%= checkbox_id %>><h4> <%= obj.menu %> </h4>¥ <%= obj.price %> <br></label>
+                            <% checkbox_id += 1 %>
+                            
+                            <div class="detail">
+                                <%= obj.detail %> <br>
+                                --アレルギー含有情報-----<br>
+                                <% if @wheat_threshold < 3 then %> 小麦：<%= obj.include_wheat %>, <% end %>
+                                <% if @egg_threshold < 3 then %> 卵：<%= obj.include_egg %>, <% end %>
+                                <% if @nuts_threshold < 3 then %> 落花生：<%= obj.include_nuts %>, <% end %>
+
+                                <br><br>
+                                --栄養情報-----<br>
+                                <% if @energy > 0 then %> エネルギー：<%= obj.energy %>kcal, <% end %>
+                                <% if @protein > 0 then %> たんぱく質：<%= obj.protein %>g, <% end %>
+                                <% if @fat > 0 then %> 脂質：<%= obj.fat %>g, <% end %>
+                                <% if @carbohydrate > 0 then %> 炭水化物：<%= obj.carbohydrate %>g, <% end %>
+
+                            </div>
+                            <% num_of_menu += 1 %>
+                        </div>
+
+                    <% end %>
+                    <% end %>
+                    <% end %>
+                <% end %>
+                <% end %>
+            <% end %>
+
+            <% if num_of_menu == 0 then %>
+            nothing to show
+            <% end %>
+
+            <% num_of_menu = 0 %>
+        
+        </div>
+
+        <br>
+
+        <div class="box-menu-genre">
+            <h3>Dessert</h3>
+            <% @data.each do |obj| %>
+                <% if obj.is_lunch == 1 then %>
+                <% if obj.is_dessert == 1 then %>
+                    <% if obj.include_wheat <= @wheat_threshold then %>
+                    <% if obj.include_egg <= @egg_threshold then %>
+                    <% if obj.include_nuts <= @nuts_threshold then %>
+
+                        <div class="box-menu-each">
+                            <input type="checkbox" id=<%= checkbox_id %> class="chklbl"/>
+                            <label for=<%= checkbox_id %>><h4> <%= obj.menu %> </h4>¥ <%= obj.price %> <br></label>
+                            <% checkbox_id += 1 %>
+                            
+                            <div class="detail">
+                                <%= obj.detail %> <br>
+                                --アレルギー含有情報-----<br>
+                                <% if @wheat_threshold < 3 then %> 小麦：<%= obj.include_wheat %>, <% end %>
+                                <% if @egg_threshold < 3 then %> 卵：<%= obj.include_egg %>, <% end %>
+                                <% if @nuts_threshold < 3 then %> 落花生：<%= obj.include_nuts %>, <% end %>
+
+                                <br><br>
+                                --栄養情報-----<br>
+                                <% if @energy > 0 then %> エネルギー：<%= obj.energy %>kcal, <% end %>
+                                <% if @protein > 0 then %> たんぱく質：<%= obj.protein %>g, <% end %>
+                                <% if @fat > 0 then %> 脂質：<%= obj.fat %>g, <% end %>
+                                <% if @carbohydrate > 0 then %> 炭水化物：<%= obj.carbohydrate %>g, <% end %>
+                            </div>
+                            <% num_of_menu += 1 %>
+                        </div>
+
+                    <% end %>
+                    <% end %>
+                    <% end %>
+                <% end %>
+                <% end %>
+            <% end %>
+
+            <% if num_of_menu == 0 then %>
+            nothing to show
+            <% end %>
+
+            <% num_of_menu = 0 %>
+
+        </div>
+
+        <br>
+        ※ 0 (not include)-3 (include as material)
+    </div>
+
+    <input type="radio" name="tab_name" id="tab2">
+    <label class="tab_class" for="tab2">Cafe</label>
+    <div class="content_class">
+        <div class="box-menu-genre">
+            <h3>Food</h3>
+            <% @data.each do |obj| %>
+                <% if obj.is_cafe == 1 then %>
+                <% if obj.is_food == 1 then %>
+                    <% if obj.include_wheat <= @wheat_threshold then %>
+                    <% if obj.include_egg <= @egg_threshold then %>
+                    <% if obj.include_nuts <= @nuts_threshold then %>
+
+                        <div class="box-menu-each">
+                            <input type="checkbox" id=<%= checkbox_id %> class="chklbl"/>
+                            <label for=<%= checkbox_id %>><h4> <%= obj.menu %> </h4>¥ <%= obj.price %> <br></label>
+                            <% checkbox_id += 1 %>
+                            
+                            <div class="detail">
+                                <%= obj.detail %> <br>
+                                --アレルギー含有情報-----<br>
+                                <% if @wheat_threshold < 3 then %> 小麦：<%= obj.include_wheat %>, <% end %>
+                                <% if @egg_threshold < 3 then %> 卵：<%= obj.include_egg %>, <% end %>
+                                <% if @nuts_threshold < 3 then %> 落花生：<%= obj.include_nuts %>, <% end %>
+
+                                <br><br>
+                                --栄養情報-----<br>
+                                <% if @energy > 0 then %> エネルギー：<%= obj.energy %>kcal, <% end %>
+                                <% if @protein > 0 then %> たんぱく質：<%= obj.protein %>g, <% end %>
+                                <% if @fat > 0 then %> 脂質：<%= obj.fat %>g, <% end %>
+                                <% if @carbohydrate > 0 then %> 炭水化物：<%= obj.carbohydrate %>g, <% end %>
+
+                            </div>
+                            <% num_of_menu += 1 %>
+                        </div>
+
+                    <% end %>
+                    <% end %>
+                    <% end %>
+                <% end %>
+                <% end %>
+            <% end %>
+
+            <% if num_of_menu == 0 then %>
+            nothing to show
+            <% end %>
+
+            <% num_of_menu = 0 %>
+        </div>
+
+        <br>
+
+        <div class="box-menu-genre">
+            <h3>Drink</h3>
+            <% @data.each do |obj| %>
+                <% if obj.is_cafe == 1 then %>
+                <% if obj.is_drink == 1 then %>
+                    <% if obj.include_wheat <= @wheat_threshold then %>
+                    <% if obj.include_egg <= @egg_threshold then %>
+                    <% if obj.include_nuts <= @nuts_threshold then %>
+
+                        <div class="box-menu-each">
+                            <input type="checkbox" id=<%= checkbox_id %> class="chklbl"/>
+                            <label for=<%= checkbox_id %>><h4> <%= obj.menu %> </h4>¥ <%= obj.price %> <br></label>
+                            <% checkbox_id += 1 %>
+                            
+                            <div class="detail">
+                                <%= obj.detail %> <br>
+                                --アレルギー含有情報-----<br>
+                                <% if @wheat_threshold < 3 then %> 小麦：<%= obj.include_wheat %>, <% end %>
+                                <% if @egg_threshold < 3 then %> 卵：<%= obj.include_egg %>, <% end %>
+                                <% if @nuts_threshold < 3 then %> 落花生：<%= obj.include_nuts %>, <% end %>
+
+                                <br><br>
+                                --栄養情報-----<br>
+                                <% if @energy > 0 then %> エネルギー：<%= obj.energy %>kcal, <% end %>
+                                <% if @protein > 0 then %> たんぱく質：<%= obj.protein %>g, <% end %>
+                                <% if @fat > 0 then %> 脂質：<%= obj.fat %>g, <% end %>
+                                <% if @carbohydrate > 0 then %> 炭水化物：<%= obj.carbohydrate %>g, <% end %>
+
+                            </div>
+                            <% num_of_menu += 1 %>
+                        </div>
+
+                    <% end %>
+                    <% end %>
+                    <% end %>
+                <% end %>
+                <% end %>
+            <% end %>
+
+            <% if num_of_menu == 0 then %>
+            nothing to show
+            <% end %>
+
+            <% num_of_menu = 0 %>
+        </div>
+
+        <br>
+
+        <div class="box-menu-genre">
+
+            <h3>Dessert</h3>
+            <% @data.each do |obj| %>
+                <% if obj.is_cafe == 1 then %>
+                <% if obj.is_dessert == 1 then %>
+                    <% if obj.include_wheat <= @wheat_threshold then %>
+                    <% if obj.include_egg <= @egg_threshold then %>
+                    <% if obj.include_nuts <= @nuts_threshold then %>
+
+                        <div class="box-menu-each">
+                            <input type="checkbox" id=<%= checkbox_id %> class="chklbl"/>
+                            <label for=<%= checkbox_id %>><h4> <%= obj.menu %> </h4>¥ <%= obj.price %> <br></label>
+                            <% checkbox_id += 1 %>
+                            
+                            <div class="detail">
+                                <%= obj.detail %> <br>
+                                --アレルギー含有情報-----<br>
+                                <% if @wheat_threshold < 3 then %> 小麦：<%= obj.include_wheat %>, <% end %>
+                                <% if @egg_threshold < 3 then %> 卵：<%= obj.include_egg %>, <% end %>
+                                <% if @nuts_threshold < 3 then %> 落花生：<%= obj.include_nuts %>, <% end %>
+
+                                <br><br>
+                                --栄養情報-----<br>
+                                <% if @energy > 0 then %> エネルギー：<%= obj.energy %>kcal, <% end %>
+                                <% if @protein > 0 then %> たんぱく質：<%= obj.protein %>g, <% end %>
+                                <% if @fat > 0 then %> 脂質：<%= obj.fat %>g, <% end %>
+                                <% if @carbohydrate > 0 then %> 炭水化物：<%= obj.carbohydrate %>g, <% end %>
+
+                            </div>
+                            <% num_of_menu += 1 %>
+                        </div>
+
+                    <% end %>
+                    <% end %>
+                    <% end %>
+                <% end %>
+                <% end %>
+            <% end %>
+
+            <% if num_of_menu == 0 then %>
+            nothing to show
+            <% end %>
+
+            <% num_of_menu = 0 %>
+        </div>
+        <br>
+        ※ 0 (not include)-3 (include as material)
+    </div>
+
+    <input type="radio" name="tab_name" id="tab3">
+    <label class="tab_class" for="tab3">Dinner</label>
+    <div class="content_class">
+        <div class="box-menu-genre">
+            <h3>Food</h3>
+            <% @data.each do |obj| %>
+                <% if obj.is_dinner == 1 then %>
+                <% if obj.is_food == 1 then %>
+                    <% if obj.include_wheat <= @wheat_threshold then %>
+                    <% if obj.include_egg <= @egg_threshold then %>
+                    <% if obj.include_nuts <= @nuts_threshold then %>
+
+                        <div class="box-menu-each">
+                            <input type="checkbox" id=<%= checkbox_id %> class="chklbl"/>
+                            <label for=<%= checkbox_id %>><h4> <%= obj.menu %> </h4>¥ <%= obj.price %> <br></label>
+                            <% checkbox_id += 1 %>
+                            
+                            <div class="detail">
+                                <%= obj.detail %> <br>
+                                --アレルギー含有情報-----<br>
+                                <% if @wheat_threshold < 3 then %> 小麦：<%= obj.include_wheat %>, <% end %>
+                                <% if @egg_threshold < 3 then %> 卵：<%= obj.include_egg %>, <% end %>
+                                <% if @nuts_threshold < 3 then %> 落花生：<%= obj.include_nuts %>, <% end %>
+
+                                <br><br>
+                                --栄養情報-----<br>
+                                <% if @energy > 0 then %> エネルギー：<%= obj.energy %>kcal, <% end %>
+                                <% if @protein > 0 then %> たんぱく質：<%= obj.protein %>g, <% end %>
+                                <% if @fat > 0 then %> 脂質：<%= obj.fat %>g, <% end %>
+                                <% if @carbohydrate > 0 then %> 炭水化物：<%= obj.carbohydrate %>g, <% end %>
+
+                            </div>
+                            <% num_of_menu += 1 %>
+                        </div>
+
+                    <% end %>
+                    <% end %>
+                    <% end %>
+                <% end %>
+                <% end %>
+            <% end %>
+
+            <% if num_of_menu == 0 then %>
+            nothing to show
+            <% end %>
+
+            <% num_of_menu = 0 %>
+        </div>
+
+        <br>
+
+        <div class="box-menu-genre">
+            <h3>Drink</h3>
+            <% @data.each do |obj| %>
+                <% if obj.is_dinner == 1 then %>
+                <% if obj.is_drink == 1 then %>
+                    <% if obj.include_wheat <= @wheat_threshold then %>
+                    <% if obj.include_egg <= @egg_threshold then %>
+                    <% if obj.include_nuts <= @nuts_threshold then %>
+
+                        <div class="box-menu-each">
+                            <input type="checkbox" id=<%= checkbox_id %> class="chklbl"/>
+                            <label for=<%= checkbox_id %>><h4> <%= obj.menu %> </h4>¥ <%= obj.price %> <br></label>
+                            <% checkbox_id += 1 %>
+                            
+                            <div class="detail">
+                                <%= obj.detail %> <br>
+                                --アレルギー含有情報-----<br>
+                                <% if @wheat_threshold < 3 then %> 小麦：<%= obj.include_wheat %>, <% end %>
+                                <% if @egg_threshold < 3 then %> 卵：<%= obj.include_egg %>, <% end %>
+                                <% if @nuts_threshold < 3 then %> 落花生：<%= obj.include_nuts %>, <% end %>
+
+                                <br><br>
+                                --栄養情報-----<br>
+                                <% if @energy > 0 then %> エネルギー：<%= obj.energy %>kcal, <% end %>
+                                <% if @protein > 0 then %> たんぱく質：<%= obj.protein %>g, <% end %>
+                                <% if @fat > 0 then %> 脂質：<%= obj.fat %>g, <% end %>
+                                <% if @carbohydrate > 0 then %> 炭水化物：<%= obj.carbohydrate %>g, <% end %>
+
+                            </div>
+                            <% num_of_menu += 1 %>
+                        </div>
+
+                    <% end %>
+                    <% end %>
+                    <% end %>
+                <% end %>
+                <% end %>
+            <% end %>
+
+            <% if num_of_menu == 0 then %>
+            nothing to show
+            <% end %>
+
+            <% num_of_menu = 0 %>
+        </div>
+
+        <br>
+
+        <div class="box-menu-genre">
+            <h3>Dessert</h3>
+            <% @data.each do |obj| %>
+                <% if obj.is_dinner == 1 then %>
+                <% if obj.is_dessert == 1 then %>
+                    <% if obj.include_wheat <= @wheat_threshold then %>
+                    <% if obj.include_egg <= @egg_threshold then %>
+                    <% if obj.include_nuts <= @nuts_threshold then %>
+
+                        <div class="box-menu-each">
+                            <input type="checkbox" id=<%= checkbox_id %> class="chklbl"/>
+                            <label for=<%= checkbox_id %>><h4> <%= obj.menu %> </h4>¥ <%= obj.price %> <br></label>
+                            <% checkbox_id += 1 %>
+                            
+                            <div class="detail">
+                                <%= obj.detail %> <br>
+                                --アレルギー含有情報-----<br>
+                                <% if @wheat_threshold < 3 then %> 小麦：<%= obj.include_wheat %>, <% end %>
+                                <% if @egg_threshold < 3 then %> 卵：<%= obj.include_egg %>, <% end %>
+                                <% if @nuts_threshold < 3 then %> 落花生：<%= obj.include_nuts %>, <% end %>
+
+                                <br><br>
+                                --栄養情報-----<br>
+                                <% if @energy > 0 then %> エネルギー：<%= obj.energy %>kcal, <% end %>
+                                <% if @protein > 0 then %> たんぱく質：<%= obj.protein %>g, <% end %>
+                                <% if @fat > 0 then %> 脂質：<%= obj.fat %>g, <% end %>
+                                <% if @carbohydrate > 0 then %> 炭水化物：<%= obj.carbohydrate %>g, <% end %>
+
+                            </div>
+                            <% num_of_menu += 1 %>
+                        </div>
+
+                    <% end %>
+                    <% end %>
+                    <% end %>
+                <% end %>
+                <% end %>
+            <% end %>
+
+            <% if num_of_menu == 0 then %>
+            nothing to show
+            <% end %>
+
+            <% num_of_menu = 0 %>
+
+        </div>
+
+        <br>
+        ※ 0 (not include)-3 (include as material)
+    </div>
+</div>
+

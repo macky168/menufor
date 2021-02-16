@@ -1,0 +1,107 @@
+// Place all the styles related to the restaurants controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.container{
+  background-color: #e8e8e8;
+}
+
+.restaurantname{
+  width: 95%;
+  margin: auto;
+  margin-bottom: 1em;
+  flex-wrap: wrap;
+  display: flex;
+  padding: 1em;
+  background-color: #ffffff;
+}
+
+.search {
+  width: 95%;
+  margin: auto;
+  margin-bottom: 1em;
+  flex-wrap: wrap;
+  display: flex;
+  padding: 1em;
+  background-color: #ffffff;
+}
+
+.area {
+  width: 95%;
+  margin: auto;
+  flex-wrap: wrap;
+  display: flex;
+}
+ 
+.tab_class {
+  width: calc(100%/3);
+  height: 50px;
+  background-color: #a7a9be;
+  line-height: 50px;
+  font-size: 15px;
+  text-align: center;
+  display: block;
+  float: left;
+  order: -1;
+  cursor :pointer;
+}
+ 
+input[name="tab_name"] {
+  display: none;
+}
+ 
+input:checked + .tab_class {
+  background-color: #ff8906;
+  color: #fffffe;
+}
+ 
+.content_class {
+  display: none;
+  width: 100%;
+}
+
+.content_class h3{
+  text-align:center;
+}
+
+.content_class h4{
+  text-align:left;
+}
+ 
+input:checked + .tab_class + .content_class {
+  display: block;
+}
+
+.box-menu-genre{
+  padding: 1em;
+  background-color: #ffffff;
+}
+
+.box-menu-each{
+  margin: 0.5em;
+  padding: 1em;
+  border: 1px solid #ff8906;
+  border-radius: 15px;
+  background-color: #ffffff;
+}
+
+
+/* ラベルをあわせるとマウスポインタを変更 */
+.content_class label {
+    background: '+' right center no-repeat;
+    cursor :pointer;
+    display: block;
+}
+/* チェックボックスは不可視にする */
+.content_class .chklbl {
+    display: none;
+}
+/* 詳細は通常不可視にする */
+.content_class .detail {
+    display: none;
+}
+/* ラベルをクリックする（内部的にチェックする）と、
+   詳細を可視化する */
+.chklbl:checked + label + .detail {
+    display: block;
+}
